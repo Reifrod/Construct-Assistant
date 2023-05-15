@@ -1,6 +1,5 @@
 import psycopg2
 
-
 class DBac:
 
 	def get_cursor_and_connection(self):
