@@ -35,6 +35,7 @@ class RememberPasswdWindow(QMainWindow):
 		self.new_passwd_label.setFont(self.widget_font)
 		self.new_passwd_lineedit = QLineEdit()
 		self.new_passwd_lineedit.setFont(self.widget_font)
+		self.new_passwd_lineedit.setEchoMode(QLineEdit.Password)
 		self.wrong_data_label = QLabel('')
 		self.wrong_data_label.setFont(self.widget_font)
 		self.change_passwd_button = QPushButton('Сменить пароль')

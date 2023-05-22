@@ -1,5 +1,6 @@
 from GUI.CreateAccount import CreateAccWindow
 from GUI.RememberPasswd import RememberPasswdWindow
+from GUI.Main import MainWindow
 
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QGridLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget
 from PyQt5.QtGui import QFont
@@ -34,6 +35,7 @@ class LoginWindow(QMainWindow):
 		self.passwd_label.setFont(self.widget_font)
 		self.passwd_lineedit = QLineEdit()
 		self.passwd_lineedit.setFont(self.widget_font)
+		self.passwd_lineedit.setEchoMode(QLineEdit.Password)
 		self.wrong_data_label = QLabel('')
 		self.wrong_data_label.setFont(self.widget_font)
 		self.sign_in_button = QPushButton('Войти')
@@ -76,11 +78,17 @@ class LoginWindow(QMainWindow):
 		username = self.username_lineedit.text()
 		passwd = self.passwd_lineedit.text()
 		id_user = self.db_requests.find_id_user_by_username_and_passwd(username,passwd)
-		if id_user == None:
-			self.wrong_data_label.setText('Неверные данные для входа')
-			self.wrong_data_label.setStyleSheet('color: Red')
+		if username != '' and passwd != '':
+			if id_user == None:
+				self.wrong_data_label.setText('Неверные данные для входа')
+				self.wrong_data_label.setStyleSheet('color: Red')
+			else:
+				self.close()
+				self.main_window = MainWindow(self.db_requests, id_user)
+				self.main_window.show()
 		else:
-			print(id_user)
+			self.wrong_data_label.setText('Данные не заполнены')
+			self.wrong_data_label.setStyleSheet('color: Red')
 
 	def create_acc(self):
 		self.wrong_data_label.setText('')
